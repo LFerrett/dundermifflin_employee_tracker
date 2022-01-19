@@ -99,7 +99,13 @@ function trackEmployees() {
 }
 
 function viewEmployees() {
-  console.log("View Employees");
+  const query = "SELECT * FROM employee";
+    db.query(query, (err, res) => {
+        if (err)
+            console.log(err);
+        const table = cTable.getTable(res);
+        console.log(table);
+    })
 }
 
 function viewEmployeesByRoles() {
