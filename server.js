@@ -100,6 +100,7 @@ function viewDepartments() {
     const table = cTable.getTable(res);
     console.log(table);
   });
+  return trackEmployees();
 }
 
 function viewRoles() {
@@ -109,6 +110,7 @@ function viewRoles() {
     const table = cTable.getTable(res);
     console.log(table);
   });
+  return trackEmployees();
 }
 
 function viewEmployees() {
@@ -118,22 +120,27 @@ function viewEmployees() {
     const table = cTable.getTable(res);
     console.log(table);
   });
+  return trackEmployees();
 }
 
 function updateEmployee() {
   console.log("Update Employee");
+  return trackEmployees();
 }
 
 function addEmployee() {
   console.log("Add Employee");
+  return trackEmployees();
 }
 
 function addRole() {
   console.log("Add Role");
+  return trackEmployees();
 }
 
 function addDepartment() {
   console.log("Add Department");
+  return trackEmployees();
 }
 
 function quit() {
