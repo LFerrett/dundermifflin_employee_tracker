@@ -101,6 +101,7 @@ function viewDepartments() {
     const table = cTable.getTable(res);
     console.log('\n>>----- ALL DUNDER MIFFLIN DEPARTMENTS ----->>');
     console.log(table);
+    console.log('\n>>----- Press enter to continue ----->>');
   });
   trackEmployees();
 }
@@ -112,6 +113,7 @@ function viewRoles() {
     const table = cTable.getTable(res);
     console.log('\n>>----- ALL DUNDER MIFFLIN ROLES ----->>');
     console.log(table);
+    console.log('\n>>----- Press enter to continue ----->>');
   });
   trackEmployees();
 }
@@ -123,6 +125,7 @@ function viewEmployees() {
     const table = cTable.getTable(res);
     console.log('\n>>----- ALL DUNDER MIFFLIN EMPLOYEES ----->>');
     console.log(table);
+    console.log('\n>>----- Press enter to continue ----->>');
   });
   trackEmployees();
 }
@@ -165,6 +168,7 @@ function addEmployee() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
+      console.log('\n>>----- Press enter to continue ----->>');
       trackEmployees();
     }
   );
@@ -204,6 +208,7 @@ function addRole() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
+      console.log('\n>>----- Press enter to continue ----->>');
       trackEmployees();
     }
   );
@@ -231,6 +236,7 @@ function addDepartment() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
+      console.log('\n>>----- Press enter to continue ----->>');
       trackEmployees();
     }
   );
@@ -238,7 +244,7 @@ function addDepartment() {
 }
 
 function quit() {
-  clear();
+  // clear();
   connection.end();
   process.exit();
 }
