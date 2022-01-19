@@ -168,13 +168,69 @@ function addEmployee() {
 }
 
 function addRole() {
-  console.log("Add Role");
-  return trackEmployees();
+  inquirer.prompt([{
+    type: "input",
+    message: "What is the role ID?",
+    name: "addRoleID",
+  },
+  {
+    type: "input",
+    message: "What is the job title?",
+    name: "addRoleName",
+  },
+  {
+    type: "input",
+    message: "What is the salary?",
+    name: "addRoleSalary",
+  },
+  {
+    type: "input",
+    message: "What is the department ID?",
+    name: "addRoleDepartment",
+  },
+]).then((answer) => {
+  db.query(
+    "INSERT INTO role (id, title, salary, department_id) VALUES (?, ?, ?, ?);",
+    [
+      answer.addRoleID,
+      answer.addRoleName,
+      answer.addRoleSalary,
+      answer.addRoleDepartment,
+    ],
+    (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    }
+  );
+});
 }
 
 function addDepartment() {
-  console.log("Add Department");
-  return trackEmployees();
+  inquirer.prompt([{
+    type: "input",
+    message: "What is the department ID?",
+    name: "addDeptID",
+  },
+  {
+    type: "input",
+    message: "What is the department name?",
+    name: "addDeptName",
+  },
+]).then((answer) => {
+  db.query(
+    "INSERT INTO department (id, name) VALUES (?, ?);",
+    [
+      answer.addDeptID,
+      answer.addDeptName,
+    ],
+    (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    }
+  );
+});
 }
 
 function quit() {
