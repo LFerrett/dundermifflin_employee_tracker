@@ -18,24 +18,10 @@ const db = mysql.createConnection(
     user: 'root',
     // MySQL password
     password: 'Mattie123',
-    database: 'courses_db'
+    database: 'office_db'
   },
-  console.log(`Connected to the courses_db database.`)
+  console.log(`Connected to the office_db database.`)
 );
-
-// Hardcoded query: DELETE FROM course_names WHERE id = 3;
-
-db.query(`DELETE FROM course_names WHERE id = ?`, 3, (err, result) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(result);
-});
-
-// Query database
-db.query('SELECT * FROM course_names', function (err, results) {
-  console.log(results);
-});
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
