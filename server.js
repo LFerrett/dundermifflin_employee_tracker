@@ -33,6 +33,7 @@ app.listen(PORT, () => {
 });
 
 function trackEmployees() {
+  console.log('\n>>----- MAIN MENU ----->>');
   inquirer
     .prompt([
       {
@@ -98,9 +99,10 @@ function viewDepartments() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
+    console.log('\n>>----- ALL DUNDER MIFFLIN DEPARTMENTS ----->>');
     console.log(table);
   });
-  return trackEmployees();
+  trackEmployees();
 }
 
 function viewRoles() {
@@ -108,9 +110,10 @@ function viewRoles() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
+    console.log('\n>>----- ALL DUNDER MIFFLIN ROLES ----->>');
     console.log(table);
   });
-  return trackEmployees();
+  trackEmployees();
 }
 
 function viewEmployees() {
@@ -118,14 +121,15 @@ function viewEmployees() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
+    console.log('\n>>----- ALL DUNDER MIFFLIN EMPLOYEES ----->>');
     console.log(table);
   });
-  return trackEmployees();
+  trackEmployees();
 }
 
 function updateEmployee() {
   console.log("Update Employee");
-  return trackEmployees();
+  trackEmployees();
 }
 
 function addEmployee() {
