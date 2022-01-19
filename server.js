@@ -1,7 +1,7 @@
-const express = require('express');
-const inquirer = require('inquirer');
-const mysql = require('mysql2');
-const cTable = require('console.table');
+const express = require("express");
+const inquirer = require("inquirer");
+const mysql = require("mysql2");
+const cTable = require("console.table");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -13,12 +13,12 @@ app.use(express.json());
 // Connect to Office database
 const db = mysql.createConnection(
   {
-    host: 'localhost',
+    host: "localhost",
     // MySQL username,
-    user: 'root',
+    user: "root",
     // MySQL password
-    password: 'Mattie123',
-    database: 'office_db'
+    password: "Mattie123",
+    database: "office_db",
   },
   console.log(`Connected to the office_db database.`)
 );
@@ -33,79 +33,69 @@ app.listen(PORT, () => {
 });
 
 function trackEmployees() {
-  inquirer.prompt([{
-    type: "list",
-    message: "What would you like to do?",
-    name: "choice",
-    choices: [
-      "View All Employees",
-      "View All Employees By Roles",
-      "View all Employees By Departments",
-      "Update Employee",
-      "Add Employee",
-      "Remove Employee",
-      "Add Role",
-      "Remove Role",
-      "View All Departments",
-      "Add Department",
-      "Remove Department",
-      "Quit",
-    ]
-  }, ]).then((result) => {
-    switch (result.choice) {
-      case "View All Employees":
-        viewEmployees();
-        break;
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What would you like to do?",
+        name: "choice",
+        choices: [
+          "View All Employees",
+          "View All Employees By Roles",
+          "View All Employees By Departments",
+          "View All Departments",
+          "Update Employee",
+          "Add Department",
+          "Add Employee",
+          "Add Role",
+          "Restart",
+          "Quit",
+        ],
+      },
+    ])
+    .then((result) => {
+      switch (result.choice) {
+        case "View All Employees":
+          viewEmployees();
+          break;
 
-      case "View All Employees By Roles":
-        viewEmployeesByRoles();
-        break;
+        case "View All Employees By Roles":
+          viewEmployeesByRoles();
+          break;
 
-      case "View all Employees By Departments":
-        viewEmployeesByDepartments();
-        break;
+        case "View All Employees By Departments":
+          viewEmployeesByDepartments();
+          break;
 
-      case "Update Employee":
-        updateEmployee();
-        break;
+        case "View All Departments":
+          viewDepartments();
+          break;
 
-      case "Add Employee":
-        addEmployee();
-        break;
+        case "Update Employee":
+          updateEmployee();
+          break;
 
-      case "Remove Employee":
-        deleteEmployee();
-        break;
+        case "Add Employee":
+          addEmployee();
+          break;
 
-      case "Add Role":
-        addRole();
-        break;
+        case "Add Role":
+          addRole();
+          break;
 
-      case "Remove Role":
-        deleteRole();
-        break;
+        case "Add Department":
+          addDepartment();
+          break;
 
-      case "Add Department":
-        addDepartment();
-        break;
+        case "Restart":
+          startScreen();
+          break;
 
-      case "View All Departments":
-        viewDepartments();
-        break;
-
-      case "Remove Department":
-        deleteDepartment();
-        break;
-
-      case "Back to beginning":
-        startScreen();
-        break;
-
-      case "Quit":
-        quit();
-        break;
-    }
-  });
+        case "Quit":
+          quit();
+          break;
+      }
+    });
 }
 
 function viewEmployees() {
@@ -118,6 +108,10 @@ function viewEmployeesByRoles() {
 
 function viewEmployeesByDepartments() {
   console.log("View Employees by departments");
+}
+
+function viewDepartments() {
+  console.log("View All Departments");
 }
 
 function updateEmployee() {
@@ -134,22 +128,6 @@ function addRole() {
 
 function addDepartment() {
   console.log("Add Department");
-}
-
-function deleteEmployee() {
-  console.log("Delete Employee");
-}
-
-function deleteDepartment() {
-  console.log("Delete Employee");
-}
-
-function viewAllDepartments() {
-  console.log("View All Departments");
-}
-
-function deleteRole() {
-  console.log("Delete Role");
 }
 
 function quit() {
