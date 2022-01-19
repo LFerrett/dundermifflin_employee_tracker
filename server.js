@@ -83,7 +83,7 @@ function trackEmployees() {
           break;
 
         case "Restart":
-          startScreen();
+          trackEmployees();
           break;
 
         case "Quit":
