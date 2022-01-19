@@ -117,7 +117,13 @@ function viewEmployeesByDepartments() {
 }
 
 function viewDepartments() {
-  console.log("View All Departments");
+  const query = "SELECT * FROM department";
+    db.query(query, (err, res) => {
+        if (err)
+            console.log(err);
+        const table = cTable.getTable(res);
+        console.log(table);
+    })
 }
 
 function updateEmployee() {
