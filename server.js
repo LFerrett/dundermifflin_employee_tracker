@@ -40,14 +40,13 @@ function trackEmployees() {
         message: "What would you like to do?",
         name: "choice",
         choices: [
-          "View All Employees",
-          "View All Employees By Roles",
-          "View All Employees By Departments",
           "View All Departments",
-          "Update Employee",
+          "View All Roles",
+          "View All Employees",
           "Add Department",
           "Add Employee",
           "Add Role",
+          "Update Employee Role",
           "Restart",
           "Quit",
         ],
@@ -55,24 +54,16 @@ function trackEmployees() {
     ])
     .then((result) => {
       switch (result.choice) {
-        case "View All Employees":
-          viewEmployees();
-          break;
-
-        case "View All Employees By Roles":
-          viewEmployeesByRoles();
-          break;
-
-        case "View All Employees By Departments":
-          viewEmployeesByDepartments();
-          break;
-
         case "View All Departments":
           viewDepartments();
           break;
 
-        case "Update Employee":
-          updateEmployee();
+        case "View All Roles":
+          viewRoles();
+          break;
+
+        case "View All Employees":
+          viewEmployees();
           break;
 
         case "Add Employee":
@@ -87,6 +78,10 @@ function trackEmployees() {
           addDepartment();
           break;
 
+        case "Update Employee":
+          updateEmployee();
+          break;
+
         case "Restart":
           startScreen();
           break;
@@ -98,32 +93,31 @@ function trackEmployees() {
     });
 }
 
-function viewEmployees() {
-  const query = "SELECT * FROM employee";
-    db.query(query, (err, res) => {
-        if (err)
-            console.log(err);
-        const table = cTable.getTable(res);
-        console.log(table);
-    })
-}
-
-function viewEmployeesByRoles() {
-  console.log("View Employees by roles");
-}
-
-function viewEmployeesByDepartments() {
-  console.log("View Employees by departments");
-}
-
 function viewDepartments() {
   const query = "SELECT * FROM department";
-    db.query(query, (err, res) => {
-        if (err)
-            console.log(err);
-        const table = cTable.getTable(res);
-        console.log(table);
-    })
+  db.query(query, (err, res) => {
+    if (err) console.log(err);
+    const table = cTable.getTable(res);
+    console.log(table);
+  });
+}
+
+function viewRoles() {
+  const query = "SELECT * FROM role";
+  db.query(query, (err, res) => {
+    if (err) console.log(err);
+    const table = cTable.getTable(res);
+    console.log(table);
+  });
+}
+
+function viewEmployees() {
+  const query = "SELECT * FROM employee";
+  db.query(query, (err, res) => {
+    if (err) console.log(err);
+    const table = cTable.getTable(res);
+    console.log(table);
+  });
 }
 
 function updateEmployee() {
