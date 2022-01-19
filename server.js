@@ -141,8 +141,8 @@ function addEmployee() {
   },
   {
     type: "input",
-    message: "Employee ID number?",
-    name: "addID",
+    message: "Role ID number?",
+    name: "addRole",
   },
   {
     type: "input",
@@ -155,7 +155,7 @@ function addEmployee() {
     [
       answer.addFirstName,
       answer.addLastName,
-      answer.addID,
+      answer.addRole,
       answer.addManagerID,
     ],
     (err, res) => {
