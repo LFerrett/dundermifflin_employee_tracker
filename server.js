@@ -129,8 +129,42 @@ function updateEmployee() {
 }
 
 function addEmployee() {
-  console.log("Add Employee");
-  return trackEmployees();
+  inquirer.prompt([{
+    type: "input",
+    message: "First Name?",
+    name: "addFirstName",
+  },
+  {
+    type: "input",
+    message: "Last Name?",
+    name: "addLastName",
+  },
+  {
+    type: "input",
+    message: "Employee ID number?",
+    name: "addID",
+  },
+  {
+    type: "input",
+    message: "Manager id number?",
+    name: "addManagerID",
+  },
+]).then((answer) => {
+  db.query(
+    "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);",
+    [
+      answer.addFirstName,
+      answer.addLastName,
+      answer.addID,
+      answer.addManagerID,
+    ],
+    (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    }
+  );
+});
 }
 
 function addRole() {
