@@ -9,14 +9,12 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    user: "root",
-    password: "Mattie123",
-    database: "office_db",
-  }
-);
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Mattie123",
+  database: "office_db",
+});
 
 app.use((req, res) => {
   res.status(404).end();
@@ -42,6 +40,9 @@ function trackEmployees() {
           "Add Employee",
           "Add Role",
           "Update Employee Role",
+          "Delete Department",
+          "Delete Employee",
+          "Delete Role",
           "Restart",
           "Quit",
         ],
@@ -75,6 +76,18 @@ function trackEmployees() {
 
         case "Update Employee Role":
           updateEmployee();
+          break;
+
+        case "Delete Department":
+          deleteDepartment();
+          break;
+
+        case "Delete Employee":
+          deleteEmployee();
+          break;
+
+        case "Delete Role":
+          deleteRole();
           break;
 
         case "Restart":
@@ -125,49 +138,44 @@ function viewEmployees() {
 }
 
 function updateEmployee() {
-  db.query(
-    "SELECT id, first_name, last_name from employee",
-    (err, res) => {
+  db.query("SELECT id, first_name, last_name from employee", (err, res) => {
+    if (err) throw err;
+    const employeeNames = res.map(
+      ({ id, first_name, last_name }) => `${id}: ${first_name} ${last_name}`
+    );
+    db.query("SELECT id, title from role", (err, res) => {
       if (err) throw err;
-      const employeeNames = res.map(
-        ({ id, first_name, last_name }) => `${id}: ${first_name} ${last_name}`
-      );
-      db.query("SELECT id, title from role", (err, res) => {
-        if (err) throw err;
-        const employeeRoles = res.map(
-          ({ id, title }) => `${id}: ${title}`
-        );
-        inquirer
-          .prompt([
-            {
-              type: "list",
-              choices: employeeNames,
-              name: "selectedEmp",
-              message: "Which employee has changed roles?",
-            },
-            {
-              type: "list",
-              choices: employeeRoles,
-              name: "selectedRole",
-              message: "What is their new role?",
-            },
-          ])
-          .then(({ selectedEmp, selectedRole }) => {
-            let id = selectedEmp.split(":")[0];
-            let role_ID = selectedRole.split(":")[0];
-            db.query(
-              "UPDATE employee SET role_ID = ? WHERE id = ?",
-              [role_ID, id],
-              (err, success) => {
-                if (err) throw err;
-                console.log(`The employee has been updated!`);
-                trackEmployees();
-              }
-            );
-          });
-      });
-    }
-  );
+      const employeeRoles = res.map(({ id, title }) => `${id}: ${title}`);
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            choices: employeeNames,
+            name: "selectedEmp",
+            message: "Which employee has changed roles?",
+          },
+          {
+            type: "list",
+            choices: employeeRoles,
+            name: "selectedRole",
+            message: "What is their new role?",
+          },
+        ])
+        .then(({ selectedEmp, selectedRole }) => {
+          let id = selectedEmp.split(":")[0];
+          let role_ID = selectedRole.split(":")[0];
+          db.query(
+            "UPDATE employee SET role_ID = ? WHERE id = ?",
+            [role_ID, id],
+            (err, success) => {
+              if (err) throw err;
+              console.log(`The employee has been updated!`);
+              trackEmployees();
+            }
+          );
+        });
+    });
+  });
 }
 
 function addEmployee() {
@@ -283,6 +291,56 @@ function addDepartment() {
       );
     });
 }
+
+function deleteDepartment() {
+  inquirer.prompt([{
+    type: "input",
+    message: "What department do you want to delete?",
+    name: "deleteDepartment"
+  }, ]).then((answer) => {
+    console.log("You have successfully deleted " + answer.deleteDepartment);
+
+    db.query("DELETE FROM department WHERE name=?;", [answer.deleteDepartment], (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    })
+  })
+};
+
+function deleteEmployee() {
+  inquirer.prompt([{
+      type: "input",
+      message: "What is the FIRST NAME of the employee do you want to delete?",
+      name: "deleteEmployeeFirst"
+    },
+    {
+      type: "input",
+      message: "What is the LAST NAME of the employee do you want to delete?",
+      name: "deleteEmployeeLast"
+    },
+  ]).then((answer) => {
+    db.query("DELETE FROM employee WHERE first_name=? AND last_name=?;", [answer.deleteEmployeeFirst, answer.deleteEmployeeLast], (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    })
+  });
+};
+
+function deleteRole() {
+  inquirer.prompt([{
+    type: "input",
+    message: "Which Role do you want to delete?",
+    name: "deleteRole",
+  }, ]).then((answer) => {
+    db.query("DELETE FROM role WHERE title= ?;", [answer.deleteRole], (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      trackEmployees();
+    })
+  })
+};
 
 function quit() {
   db.end();
