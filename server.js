@@ -20,7 +20,7 @@ const db = mysql.createConnection(
     password: "Mattie123",
     database: "office_db",
   },
-  console.log(`Connected to the office_db database.`)
+  // console.log(`Connected to the office_db database.`)
 );
 
 // Default response for any other request (Not Found)
@@ -29,16 +29,16 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+ // console.log(`Server running on port ${PORT}`);
 });
 
 function trackEmployees() {
-  console.log('\n>>----- MAIN MENU ----->>');
+  console.log('\n**----- MAIN MENU -----**');
   inquirer
     .prompt([
       {
         type: "list",
-        message: "What would you like to do?",
+        message: "Welcome! How would you like to proceed?",
         name: "choice",
         choices: [
           "View All Departments",
@@ -99,9 +99,9 @@ function viewDepartments() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
-    console.log('\n>>----- ALL DUNDER MIFFLIN DEPARTMENTS ----->>');
+    console.log('\n**----- ALL DUNDER MIFFLIN DEPARTMENTS -----**');
     console.log(table);
-    console.log('\n>>----- Press enter to continue ----->>');
+    console.log('\n**----- Arrow up or down to continue -----**');
   });
   trackEmployees();
 }
@@ -111,9 +111,9 @@ function viewRoles() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
-    console.log('\n>>----- ALL DUNDER MIFFLIN ROLES ----->>');
+    console.log('\n**----- ALL DUNDER MIFFLIN ROLES -----**');
     console.log(table);
-    console.log('\n>>----- Press enter to continue ----->>');
+    console.log('\n**----- Arrow up or down to continue -----**');
   });
   trackEmployees();
 }
@@ -123,9 +123,9 @@ function viewEmployees() {
   db.query(query, (err, res) => {
     if (err) console.log(err);
     const table = cTable.getTable(res);
-    console.log('\n>>----- ALL DUNDER MIFFLIN EMPLOYEES ----->>');
+    console.log('\n**----- ALL DUNDER MIFFLIN EMPLOYEES -----**');
     console.log(table);
-    console.log('\n>>----- Press enter to continue ----->>');
+    console.log('\n**----- Arrow up or down to continue -----**');
   });
   trackEmployees();
 }
@@ -168,7 +168,7 @@ function addEmployee() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
-      console.log('\n>>----- Press enter to continue ----->>');
+      console.log('\n**----- Arrow up or down to continue -----**');
       trackEmployees();
     }
   );
@@ -208,7 +208,7 @@ function addRole() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
-      console.log('\n>>----- Press enter to continue ----->>');
+      console.log('\n**----- Arrow up or down to continue -----**');
       trackEmployees();
     }
   );
@@ -236,7 +236,7 @@ function addDepartment() {
     (err, res) => {
       if (err) throw err;
       console.table(res);
-      console.log('\n>>----- Press enter to continue ----->>');
+      console.log('\n**----- Arrow up or down to continue -----**');
       trackEmployees();
     }
   );
@@ -244,8 +244,7 @@ function addDepartment() {
 }
 
 function quit() {
-  // clear();
-  connection.end();
+  db.end();
   process.exit();
 }
 
